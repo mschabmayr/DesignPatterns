@@ -6,7 +6,7 @@ public class Singleton {
 
 	// keep single static instance
 	private static Singleton instance;
-	
+
 	private UUID id;
 
 	private Singleton() {
@@ -21,11 +21,11 @@ public class Singleton {
 		}
 		return instance;
 	}
-	
+
 	public UUID getId() {
 		return this.id;
 	}
-	
+
 	public String getIdString() {
 		return String.valueOf(this.id);
 	}

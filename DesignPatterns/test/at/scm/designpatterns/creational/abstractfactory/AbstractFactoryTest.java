@@ -5,64 +5,68 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import at.scm.designpatterns.creational.abstractfactory.model.base.Attacker;
-import at.scm.designpatterns.creational.abstractfactory.model.base.Defender;
-import at.scm.designpatterns.creational.abstractfactory.model.base.Wall;
+import at.scm.designpatterns.creational.abstractfactory.factory.AbstractCreatureFactory;
+import at.scm.designpatterns.creational.abstractfactory.factory.CreatureFactoryProducer;
+import at.scm.designpatterns.creational.abstractfactory.model.AbstractCreature;
+import at.scm.designpatterns.creational.abstractfactory.model.IAttacker;
+import at.scm.designpatterns.creational.abstractfactory.model.IDefender;
 
 class AbstractFactoryTest {
 
 	@Test
-	void testBlackAttackType() {
-		SummonerApp summonerApp = new SummonerApp("Black");
-		Attacker attacker = summonerApp.getAttacker();
-		assertNotNull(attacker);
-		assertEquals("Snakes", attacker.getAttackType());
+	public void testBlackCreatureCreation() {
+		AbstractCreatureFactory factory = CreatureFactoryProducer.getFactory("Black");
+		assertCreature(factory.createAttacker(), "Black", "Attacker", "Stealth Blade");
+		assertCreature(factory.createDefender(), "Black", "Defender", "All-Consuming Abyss");
 	}
 
 	@Test
-	void testBlackDefenseMaterial() {
-		SummonerApp summonerApp = new SummonerApp("Black");
-		Defender defender = summonerApp.getDefender();
-		assertNotNull(defender);
-		Wall wall = defender.raiseWall();
-		assertNotNull(wall);
-		assertEquals("Fog", wall.getMaterial());
+	public void testBlueCreatureCreation() {
+		AbstractCreatureFactory factory = CreatureFactoryProducer.getFactory("Blue");
+		assertCreature(factory.createAttacker(), "Blue", "Attacker", "Crushing Wave");
+		assertCreature(factory.createDefender(), "Blue", "Defender", "Blinding Fog");
 	}
 
 	@Test
-	void testBlueAttackType() {
-		SummonerApp summonerApp = new SummonerApp("Blue");
-		Attacker attacker = summonerApp.getAttacker();
-		assertNotNull(attacker);
-		assertEquals("Ice Spear", attacker.getAttackType());
+	public void testGreenCreatureCreation() {
+		AbstractCreatureFactory factory = CreatureFactoryProducer.getFactory("Green");
+		assertCreature(factory.createAttacker(), "Green", "Attacker", "Wild Roar");
+		assertCreature(factory.createDefender(), "Green", "Defender", "Thornwall");
 	}
 
 	@Test
-	void testBlueDefenseMaterial() {
-		SummonerApp summonerApp = new SummonerApp("Blue");
-		Defender defender = summonerApp.getDefender();
-		assertNotNull(defender);
-		Wall wall = defender.raiseWall();
-		assertNotNull(wall);
-		assertEquals("Ice", wall.getMaterial());
+	public void testRedCreatureCreation() {
+		AbstractCreatureFactory factory = CreatureFactoryProducer.getFactory("Red");
+		assertCreature(factory.createAttacker(), "Red", "Attacker", "Lavaspear");
+		assertCreature(factory.createDefender(), "Red", "Defender", "Flamewall");
 	}
 
 	@Test
-	void testRedAttackType() {
-		SummonerApp summonerApp = new SummonerApp("Red");
-		Attacker attacker = summonerApp.getAttacker();
-		assertNotNull(attacker);
-		assertEquals("Giant Fireball", attacker.getAttackType());
+	public void testWhiteCreatureCreation() {
+		AbstractCreatureFactory factory = CreatureFactoryProducer.getFactory("White");
+		assertCreature(factory.createAttacker(), "White", "Attacker", "Thunderbolt");
+		assertCreature(factory.createDefender(), "White", "Defender", "Dancing Blades");
 	}
 
-	@Test
-	void testRedDefenseMaterial() {
-		SummonerApp summonerApp = new SummonerApp("Red");
-		Defender defender = summonerApp.getDefender();
-		assertNotNull(defender);
-		Wall wall = defender.raiseWall();
-		assertNotNull(wall);
-		assertEquals("Sand", wall.getMaterial());
+	private static void assertCreature(AbstractCreature creature, String expectedColour, String expectedRole,
+			String expectedAction) {
+		assertNotNull(creature);
+		assertEquals(expectedColour, creature.getColour());
+		assertEquals(expectedRole, creature.getRole());
+
+		if (creature instanceof IAttacker) {
+			assertAttacker((IAttacker) creature, expectedAction);
+		} else if (creature instanceof IDefender) {
+			assertDefender((IDefender) creature, expectedAction);
+		}
+	}
+
+	private static void assertAttacker(IAttacker attacker, String expectedAttack) {
+		assertEquals(expectedAttack, attacker.getAttack());
+	}
+
+	private static void assertDefender(IDefender defender, String expectedDefence) {
+		assertEquals(expectedDefence, defender.getDefence());
 	}
 
 }

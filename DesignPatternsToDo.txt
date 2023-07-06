@@ -1,0 +1,13 @@
+DesignPatternsToDo.txt
+
+fix nested project DesignPatterns / DesignPatterns
+add this todo to gitignore
+
+Elements Attack        Defense             Description
+Red      Lavaspear     Flamewall           Fire, Aggression
+Blue     Crushing Wave Blinding Fog        Water, Control
+Black    Stealth Blade All-Consuming Abyss Darkness, Death
+Green    Wild Roar     Thornwall           Earth, Nature
+White    Thunderbolt   Dancing Blades      Light, Life
+
+-- end
